@@ -97,8 +97,10 @@ def calcular_correlacao(frequencias_mensagem, frequencias_esperadas):
 
 
 def ataque_analise_frequencia(criptograma, frequencias_esperadas):
-    melhor_chave = ""  # Inicializa a melhor chave encontrada como uma string vazia
-    melhor_correlacao = -1.0  # Inicializa a melhor correlação como o pior valor possível
+    # Inicializa a melhor chave encontrada como uma string vazia
+    melhor_chave = ""
+    # Inicializa a melhor correlação como o pior valor possível
+    melhor_correlacao = -1.0
 
     # Loop sobre as possíveis chaves (todas as letras do alfabeto)
     for chave in range(26):
@@ -120,3 +122,58 @@ def ataque_analise_frequencia(criptograma, frequencias_esperadas):
 
     # Retorna a melhor chave que resultou na maior correlação
     return melhor_chave
+
+
+# Teste de cifragem e decifragem com uma mensagem simples
+
+mensagem_portugues = "Isso e um teste"
+chave_portugues = "chave"  # A chave deve ser "chave" em letras minúsculas
+
+criptograma_portugues = cifrar_vigenere(mensagem_portugues, chave_portugues)
+print("Mensagem Cifrada (Português):", criptograma_portugues)
+
+mensagem_decifrada_portugues = decifrar_vigenere(criptograma_portugues, chave_portugues)
+print("Mensagem Decifrada (Português):", mensagem_decifrada_portugues)
+# Deve imprimir a mensagem original "Isso e um teste"
+
+print('------------------------------------------------')
+print('------------------------------------------------')
+print('------------------------------------------------')
+
+mensagem_ingles = "This is a test"
+chave_ingles = "key"  # A chave deve ser "key" em letras minúsculas
+
+criptograma_ingles = cifrar_vigenere(mensagem_ingles, chave_ingles)
+print("Mensagem Cifrada (Inglês):", criptograma_ingles)
+
+mensagem_decifrada_ingles = decifrar_vigenere(criptograma_ingles, chave_ingles)
+print("Mensagem Decifrada (Inglês):", mensagem_decifrada_ingles)
+
+print('------------------------------------------------')
+print('------------------------------------------------')
+print('------------------------------------------------')
+
+
+# Testes de ataque por análise de frequência para mensagens em português
+
+ataque_mensagem_port = criptograma_portugues
+chave_desconhecida_port = ataque_analise_frequencia(ataque_mensagem_port, frequencias_portugues)  # Use frequências em português
+print("Chave Recuperada (Português):", chave_desconhecida_port)
+
+mensagem_decifrada_ataque_port = decifrar_vigenere(ataque_mensagem_port, chave_desconhecida_port)
+print("Mensagem Decifrada (Ataque - Português):", mensagem_decifrada_ataque_port)
+
+print('------------------------------------------------')
+
+# Testes de ataque por análise de frequência para mensagens em inglês
+
+ataque_mensagem_ing = criptograma_ingles
+chave_desconhecida_ing = ataque_analise_frequencia(ataque_mensagem_ing, frequencias_ingles)  # Use frequências em inglês
+print("Chave Recuperada (Inglês):", chave_desconhecida_ing)
+
+mensagem_decifrada_ataque = decifrar_vigenere(ataque_mensagem_ing, chave_desconhecida_ing)
+print("Mensagem Decifrada (Ataque - Inglês):", mensagem_decifrada_ataque)
+
+
+
+
